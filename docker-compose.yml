@@ -7,7 +7,7 @@ services:
       - ORACLE_PDB=ORCLPDB1
       - ORACLE_PWD=Oracle_123
     ports:
-      - 1521:1521
+      - "1521:1521"
     volumes:
       - oracle-data:/opt/oracle/oradata
       - oracle-backup:/opt/oracle/backup
@@ -16,6 +16,10 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+  jboss:
+    image: daggerok/jboss-eap-6.4:6.4.22-alpine
+    ports:
+      - "8080:8080"
 
 volumes:
   oracle-data:
