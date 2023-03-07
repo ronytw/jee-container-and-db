@@ -50,8 +50,9 @@ safe_run ${JBOSS_CLI} --connect \
              --command="module add --name=${MODULE_NAME} --resources=${OJDBC_DRIVER} --dependencies=javax.api,javax.transaction.api"
 
 info "Adding OJDBC driver"
+DRIVER_NAME="ojdbc"
 safe_run ${JBOSS_CLI} --connect \
-             --command="/subsystem=datasources/jdbc-driver=ojdbc:add(driver-name=ojdbc,driver-module-name=${MODULE_NAME},driver-class-name=oracle.jdbc.OracleDriver)"
+             --command="/subsystem=datasources/jdbc-driver=${DRIVER_NAME}:add(driver-name=${DRIVER_NAME},driver-module-name=${MODULE_NAME},driver-class-name=oracle.jdbc.OracleDriver)"
 
 info "Creating a new datasource"
 safe_run ${JBOSS_CLI} --connect --command="data-source add
@@ -59,7 +60,7 @@ safe_run ${JBOSS_CLI} --connect --command="data-source add
         --jndi-name=java:/jdbc/visits
         --user-name=visitsusr
         --password=visitspwd
-        --driver-name=ojdbc
+        --driver-name=${DRIVER_NAME}
         --connection-url=jdbc:oracle:thin:@//oracle-db:1521/orclpdb1
         --max-pool-size=25
         --blocking-timeout-wait-millis=5000
