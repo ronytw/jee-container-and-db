@@ -17,7 +17,7 @@ FROM daggerok/jboss-eap-6.4:6.4.22-alpine
 
 # Script to start JBoss and install the driver and datasource via JBoss-CLI
 COPY docker-resources/install-datasource.sh /tmp
-RUN /bin/bash /tmp/install-datasource.sh && rm -f /tmp/install-datasource.sh
+RUN /bin/bash /tmp/install-datasource.sh
 
 # Fixes issue with logging rotation (permissions?)
 RUN rm -rf ${JBOSS_HOME}/standalone/configuration/standalone_xml_history/current
